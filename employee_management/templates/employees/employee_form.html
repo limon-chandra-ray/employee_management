@@ -1,0 +1,48 @@
+{% extends 'employ_base.html' %}
+
+{% block employBlock %}
+<div class="row d-flex justify-content-center">
+    <div class="col-md-6">
+        <h2>{% if object %}Edit{% else %}Add{% endif %} Employee</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3 d-flex flex-column">
+                {{ form.first_name.label_tag  }}
+                {{ form.first_name }}
+            </div>
+            <div class="mb-3 d-flex flex-column">
+                {{ form.last_name.label_tag  }}
+                {{ form.last_name }}
+            </div>
+            <div class="mb-3 d-flex flex-column">
+                {{ form.email.label_tag  }}
+                {{ form.email }}
+            </div>
+            <div class="mb-3 d-flex flex-column">
+                {{ form.mobile.label_tag  }}
+                {{ form.mobile }}
+            </div>
+            <div class="mb-3 d-flex flex-column">
+                {{ form.position.label_tag  }}
+                {{ form.position }}
+            </div>
+            <div class="mb-3 d-flex flex-column">
+                {{ form.department.label_tag  }}
+                {{ form.department }}
+            </div>
+            <div class="mb-3 d-flex flex-column">
+                {{ form.date_of_birth.label_tag  }}
+                {{ form.date_of_birth }}
+            </div>
+            <div class="mb-3 d-flex flex-column">
+                {{ form.photo.label_tag  }}
+                {{ form.photo }}
+            </div>
+            <div class="mb-3 d-flex justify-content-center">
+                <button type="submit" class="btn btn-success w-50">Save</button>
+            </div>
+            
+        </form>
+    </div>
+</div>
+{% endblock employBlock %}

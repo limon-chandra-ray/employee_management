@@ -1,0 +1,183 @@
+{% extends 'employ_base.html' %}
+
+{% block employBlock %}
+
+<!-- Search Form -->
+<div class="d-flex p-3 w-100 border border-2 mb-3 rounded">
+    <form method="GET" action="." class="w-100">
+        <div class="d-flex justify-content-between gap-2 w-100">
+            <input class="form-control" type="text" name="name" placeholder="Name">
+            <input class="form-control" type="date" name="date_of_birth">
+            <input class="form-control" type="text" name="email" placeholder="Email">
+            <input class="form-control" type="text" name="mobile" placeholder="Mobile">
+            <button type="submit" class="btn-none border-0 bg-transparent text-primary"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+    </form>
+</div>
+<!-- Employee Table -->
+<table class="table table-striped table-bordered align-middle">
+    <thead>
+        <tr class="text-center">
+            <th>Photo</th>
+            <th >
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>First Name</div>
+                    <div class="d-flex flex-column justify-content-center">
+                        <div id="listHeader" data-sort="first_name" data-order="asc" class="d-flex justify-content-center" style="margin-bottom: -4px;"><i class="fa-solid fa-caret-up"></i></div>
+                        <div id="listHeader" data-sort="first_name" data-order="desc" class="d-flex justify-content-center" style="margin-top: -4px;"><i class="fa-solid fa-caret-down"></i></div>
+                    </div>
+                </div>
+            </th>
+            <th>
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>Last Name</div>
+                    <div class="d-flex flex-column justify-content-center">
+                        <div id="listHeader" data-sort="last_name" data-order="asc" class="d-flex justify-content-center" style="margin-bottom: -4px;">
+                            <i class="fa-solid fa-caret-up"></i>
+                        </div>
+                        <div id="listHeader" data-sort="last_name" data-order="desc" class="d-flex justify-content-center" style="margin-top: -4px;">
+                            <i class="fa-solid fa-caret-down"></i>
+                        </div>
+                    </div>
+                </div>
+            </th>
+            <th>
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>Email</div>
+                    <div class="d-flex flex-column justify-content-center">
+                        <div id="listHeader" data-sort="email" data-order="asc" class="d-flex justify-content-center" style="margin-bottom: -4px;"><i class="fa-solid fa-caret-up"></i></div>
+                        <div id="listHeader" data-sort="email" data-order="desc" class="d-flex justify-content-center" style="margin-top: -4px;"><i class="fa-solid fa-caret-down"></i></div>
+                    </div>
+                </div>
+            </th>
+            <th id="listHeader" data-sort="mobile" data-order="asc">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>Mobile</div>
+                    <div class="d-flex flex-column justify-content-center">
+                        <div id="listHeader" data-sort="mobile" data-order="asc" class="d-flex justify-content-center" style="margin-bottom: -4px;"><i class="fa-solid fa-caret-up"></i></div>
+                        <div id="listHeader" data-sort="mobile" data-order="desc" class="d-flex justify-content-center" style="margin-top: -4px;"><i class="fa-solid fa-caret-down"></i></div>
+                    </div>
+                </div>
+            </th>
+            <th>
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>Position</div>
+                    <div class="d-flex flex-column justify-content-center">
+                        <div id="listHeader" data-sort="position" data-order="asc" class="d-flex justify-content-center" style="margin-bottom: -4px;"><i class="fa-solid fa-caret-up"></i></div>
+                        <div id="listHeader" data-sort="position" data-order="desc" class="d-flex justify-content-center" style="margin-top: -4px;"><i class="fa-solid fa-caret-down"></i></div>
+                    </div>
+                </div>
+            </th>
+            <th id="listHeader" data-sort="department" data-order="asc">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>Department</div>
+                    <div class="d-flex flex-column justify-content-center">
+                        <div id="listHeader" data-sort="department" data-order="asc" class="d-flex justify-content-center" style="margin-bottom: -4px;"><i class="fa-solid fa-caret-up"></i></div>
+                        <div id="listHeader" data-sort="department" data-order="desc" class="d-flex justify-content-center" style="margin-top: -4px;"><i class="fa-solid fa-caret-down"></i></div>
+                    </div>
+                </div>
+            </th>
+            <th>
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>Date of Birth</div>
+                    <div class="d-flex flex-column justify-content-center">
+                        <div id="listHeader" data-sort="date_of_birth" data-order="asc" class="d-flex justify-content-center" style="margin-bottom: -4px;"><i class="fa-solid fa-caret-up"></i></div>
+                        <div id="listHeader" data-sort="date_of_birth" data-order="desc" class="d-flex justify-content-center" style="margin-top: -4px;"><i class="fa-solid fa-caret-down"></i></div>
+                    </div>
+                </div>        
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for employee in employees_obj %}
+        <tr class="text-center">
+            <td><img src="{{ employee.photo.url }}" width="50" height="50"></td>
+            <td>{{ employee.first_name }}</td>
+            <td>{{ employee.last_name }}</td>
+            <td>{{ employee.email }}</td>
+            <td>{{ employee.mobile }}</td>
+            <td>{{ employee.position }}</td>
+            <td>{{ employee.department }}</td>
+            <td>{{ employee.date_of_birth }}</td>
+            <td>
+                <a href="{% url 'employee-edit' employee.pk %}" class="btn text-primary border-0 bg-transparent"><i class="fa-solid fa-pen-to-square"></i></a>
+                <button type="button" data-bs-toggle="modal" data-url="{% url 'employee-delete' employee.pk %}" data-bs-target="#deleteModal" class="btn text-danger border-0 bg-transparent"><i class="fa-solid fa-trash-can"></i></button>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="9">No employees found</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete this item?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <form id="deleteForm" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- Pagination -->
+<div class="pagination d-flex align-items-center gap-3 position-absolute" style="right:40px;bottom:10px">
+    {% if employees_obj.has_previous %}
+        <a href="?page=1"><i class="fa-solid fa-angles-left"></i></a>
+        <a href="?page={{ employees_obj.previous_page_number }}"><i class="fa-solid fa-chevron-left"></i></a>
+    {% endif %}
+    <div class="d-flex gap-2">
+        {% for num in employees_obj.paginator.page_range  %}
+            {% if num == employees_obj.number %}
+                <div class="px-3 pb-2 border-bottom border-2 border-primary">{{num}}</div>
+            {% else %}
+                <div class="px-3 pb-2 border-bottom border-secondary">{{num}}</div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% if employees_obj.has_next %}
+        <a href="?page={{ employees_obj.next_page_number }}"><i class="fa-solid fa-chevron-right"></i></a>
+        <a href="?page={{ employees_obj.paginator.num_pages }}"><i class="fa-solid fa-angles-right"></i></a>
+    {% endif %}
+</div>
+
+
+{% endblock employBlock %}
+{% block employScript %}
+<!-- JavaScript -->
+<script>
+    const deleteModal = document.getElementById('deleteModal');
+    deleteModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;  
+        const url = button.getAttribute('data-url'); 
+        const form = deleteModal.querySelector('#deleteForm');
+        form.action = url; 
+    });
+    var list_header = document.querySelectorAll('#listHeader')
+    list_header.forEach((element) => {
+        $(element).on('click',()=>{
+            var sort_data = $(element).attr('data-sort');
+            var sort_type = $(element).attr('data-order');
+            if(sort_type === 'asc'){
+                $(element).attr('data-order','desc')
+            }else{
+                $(element).attr('data-order','asc') 
+            }
+            href = "/employees/?sort="+sort_data+"&order="+sort_type;
+            window.location.replace(href)
+        })
+    })
+
+</script>
+{% endblock employScript %}
